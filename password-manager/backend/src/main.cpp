@@ -22,7 +22,6 @@ int main() {
 
     int choice;
     std::string site, username, password, newPassword;
-    std::string response;  // Moved declaration outside the switch statement
 
     while (true) {
         displayMenu();
@@ -83,11 +82,11 @@ int main() {
                 break;
 
             case 5: {
-                std::vector<std::string> passwords;
-                listPasswords(passwords); // Updated to use a vector
+                std::vector<std::tuple<std::string, std::string, std::string>> passwords;
+                listPasswords(passwords); // Updated to use a vector of tuples
 
-                for (const auto& password : passwords) {
-                    std::cout << password << std::endl;
+                for (const auto& [site, username, password] : passwords) {
+                    std::cout << "Site: " << site << ", Username: " << username << ", Password: " << password << std::endl;
                 }
                 break;
             }

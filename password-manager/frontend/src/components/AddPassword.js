@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { addPassword } from '../api';
+import { TextField, Button, Typography, Box } from '@mui/material';
 
 const AddPassword = () => {
   const [site, setSite] = useState('');
@@ -18,25 +19,39 @@ const AddPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Add Password</h2>
+    <Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Add Password
+      </Typography>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Site:</label>
-          <input type="text" value={site} onChange={(e) => setSite(e.target.value)} />
-        </div>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button type="submit">Add Password</button>
+        <TextField
+          label="Site"
+          value={site}
+          onChange={(e) => setSite(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Add Password
+        </Button>
       </form>
-      {message && <p>{message}</p>}
-    </div>
+      {message && <Typography variant="body1" color="error">{message}</Typography>}
+    </Box>
   );
 };
 

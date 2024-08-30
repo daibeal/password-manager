@@ -1,4 +1,5 @@
 #include "common.h"
+#include "encryption.h" // Include Encryption
 
 DBManager dbManager("passwords.db");
 
@@ -30,9 +31,6 @@ bool deletePassword(const std::string& site, const std::string& username) {
     return dbManager.deletePassword(site, username);
 }
 
-void listPasswords(std::vector<std::string>& passwords) {
-    // Example implementation
-    passwords.push_back("example_password_1");
-    passwords.push_back("example_password_2");
-    // Add more passwords as needed
+void listPasswords(std::vector<std::tuple<std::string, std::string, std::string>>& passwords) {
+    passwords = dbManager.getPasswords();
 }

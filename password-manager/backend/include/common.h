@@ -3,8 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "db_manager.h"
-#include "encryption.h"
+#include <tuple>
+#include "db_manager.h" // Include DBManager
 
 extern DBManager dbManager;
 
@@ -13,6 +13,6 @@ bool addPassword(const std::string& site, const std::string& username, const std
 std::string getPassword(const std::string& site, const std::string& username);
 bool updatePassword(const std::string& site, const std::string& username, const std::string& newPassword);
 bool deletePassword(const std::string& site, const std::string& username);
-void listPasswords(std::vector<std::string>& passwords);
+void listPasswords(std::vector<std::tuple<std::string, std::string, std::string>>& passwords);
 
 #endif // COMMON_H

@@ -110,8 +110,8 @@ void addRoutes(Server& svr) {
     svr.Get("/list_passwords", [](const Request& req, Response& res) {
         std::cout << "GET /list_passwords" << std::endl;
 
-        std::vector<std::string> passwords;
-        listPasswords(passwords); // Assuming listPasswords fills the vector with passwords
+        std::vector<std::tuple<std::string, std::string, std::string>> passwords;
+        listPasswords(passwords); // Updated to use a vector of tuples
 
         json response = passwords; // Convert vector to JSON array
         res.set_content(response.dump(), "application/json");

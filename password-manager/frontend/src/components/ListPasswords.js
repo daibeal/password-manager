@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { listPasswords } from '../api';
+import { Typography, Box, List, ListItem, ListItemText } from '@mui/material';
 
 const ListPasswords = () => {
   const [passwords, setPasswords] = useState([]);
@@ -20,15 +21,19 @@ const ListPasswords = () => {
   }, []);
 
   return (
-    <div>
-      <h2>List Passwords</h2>
-      {message && <p>{message}</p>}
-      <ul>
+    <Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        List Passwords
+      </Typography>
+      {message && <Typography variant="body1" color="error">{message}</Typography>}
+      <List>
         {passwords.map((password, index) => (
-          <li key={index}>{password}</li>
+          <ListItem key={index}>
+            <ListItemText primary={password} />
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </List>
+    </Box>
   );
 };
 

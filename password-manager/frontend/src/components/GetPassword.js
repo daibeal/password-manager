@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getPassword } from '../api';
+import { TextField, Button, Typography, Box } from '@mui/material';
 
 const GetPassword = () => {
   const [site, setSite] = useState('');
@@ -11,7 +12,7 @@ const GetPassword = () => {
     e.preventDefault();
     try {
       const response = await getPassword(site, username);
-      setPassword(response.data);
+      setPassword(response.data.password);
       setMessage('');
     } catch (error) {
       setMessage('Failed to get password');
@@ -20,22 +21,32 @@ const GetPassword = () => {
   };
 
   return (
-    <div>
-      <h2>Get Password</h2>
+    <Box>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Get Password
+      </Typography>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Site:</label>
-          <input type="text" value={site} onChange={(e) => setSite(e.target.value)} />
-        </div>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <button type="submit">Get Password</button>
+        <TextField
+          label="Site"
+          value={site}
+          onChange={(e) => setSite(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Get Password
+        </Button>
       </form>
-      {password && <p>Password: {password}</p>}
-      {message && <p>{message}</p>}
-    </div>
+      {password && <Typography variant="body1">Password: {password}</Typography>}
+      {message && <Typography variant="body1" color="error">{message}</Typography>}
+    </Box>
   );
 };
 
