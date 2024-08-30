@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <string>
+#include <vector>
 #include "db_manager.h"
 #include "encryption.h"
 
@@ -12,6 +13,6 @@ bool addPassword(const std::string& site, const std::string& username, const std
 std::string getPassword(const std::string& site, const std::string& username);
 bool updatePassword(const std::string& site, const std::string& username, const std::string& newPassword);
 bool deletePassword(const std::string& site, const std::string& username);
-void listPasswords(std::string& response);
+void listPasswords(std::vector<std::string>& passwords);
 
 #endif // COMMON_H

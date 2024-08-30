@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include "common.h"
 
 void displayMenu() {
@@ -81,11 +82,15 @@ int main() {
                 }
                 break;
 
-            case 5:
-                response.clear();  // Clear the response string before using it
-                listPasswords(response);
-                std::cout << response;
+            case 5: {
+                std::vector<std::string> passwords;
+                listPasswords(passwords); // Updated to use a vector
+
+                for (const auto& password : passwords) {
+                    std::cout << password << std::endl;
+                }
                 break;
+            }
 
             case 6:
                 std::cout << "Exiting...\n";
