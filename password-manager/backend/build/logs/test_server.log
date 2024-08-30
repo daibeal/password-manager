@@ -1,0 +1,16 @@
+[2024-08-31 00:09:11.360] [basic_logger] [info] Starting server...
+[2024-08-31 00:09:16.381] [basic_logger] [info] Test Add Password: OK
+[2024-08-31 00:09:16.382] [basic_logger] [info] Test Get Password: OK
+[2024-08-31 00:09:16.384] [basic_logger] [info] Test Update Password: OK
+[2024-08-31 00:09:16.385] [basic_logger] [info] Test Get Updated Password: OK
+[2024-08-31 00:09:16.387] [basic_logger] [info] Test Delete Password: OK
+[2024-08-31 00:09:16.389] [basic_logger] [info] Test List Passwords: OK
+[2024-08-31 00:09:16.389] [basic_logger] [info] Stopping server...
+[2024-08-31 00:11:34.329] [multi_sink] [info] Starting server...
+[2024-08-31 00:11:39.348] [multi_sink] [info] Test Add Password: OK
+[2024-08-31 00:11:39.349] [multi_sink] [info] Test Get Password: OK
+[2024-08-31 00:11:39.352] [multi_sink] [info] Test Update Password: OK
+[2024-08-31 00:11:39.354] [multi_sink] [info] Test Get Updated Password: OK
+[2024-08-31 00:11:39.356] [multi_sink] [info] Test Delete Password: OK
+[2024-08-31 00:11:39.357] [multi_sink] [info] Test List Passwords: OK
+[2024-08-31 00:11:39.357] [multi_sink] [info] Stopping server...
