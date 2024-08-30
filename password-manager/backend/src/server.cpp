@@ -113,9 +113,13 @@ void addRoutes(Server& svr) {
         std::vector<std::tuple<std::string, std::string, std::string>> passwords;
         listPasswords(passwords); // Updated to use a vector of tuples
 
-        json response = passwords; // Convert vector to JSON array
-        res.set_content(response.dump(), "application/json");
-        std::cout << "Response: " << response.dump() << std::endl;
+        std::string response;
+        for (const auto& [site, username, password] : passwords) {
+            response += "Site: " + site + ", Username: " + username + ", Password: " + password + "\n";
+        }
+
+        res.set_content(response, "text/plain");
+        std::cout << "Response: " << response << std::endl;
         add_cors_headers(res);
     });
 }

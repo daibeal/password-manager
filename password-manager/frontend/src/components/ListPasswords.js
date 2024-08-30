@@ -10,7 +10,9 @@ const ListPasswords = () => {
     const fetchPasswords = async () => {
       try {
         const response = await listPasswords();
-        setPasswords(response.data);
+        const passwordsText = response.data;
+        const passwordsArray = parsePasswords(passwordsText);
+        setPasswords(passwordsArray);
         setMessage('');
       } catch (error) {
         setMessage('Failed to list passwords');
@@ -19,6 +21,17 @@ const ListPasswords = () => {
 
     fetchPasswords();
   }, []);
+
+  const parsePasswords = (text) => {
+    const lines = text.split('\n');
+    return lines.map(line => {
+      const [sitePart, usernamePart, passwordPart] = line.split(', ');
+      const site = sitePart.split(': ')[1];
+      const username = usernamePart.split(': ')[1];
+      const password = passwordPart.split(': ')[1];
+      return { site, username, password };
+    });
+  };
 
   return (
     <Box>
@@ -29,7 +42,10 @@ const ListPasswords = () => {
       <List>
         {passwords.map((password, index) => (
           <ListItem key={index}>
-            <ListItemText primary={password} />
+            <ListItemText
+              primary={`Site: ${password.site}`}
+              secondary={`Username: ${password.username}, Password: ${password.password}`}
+            />
           </ListItem>
         ))}
       </List>
