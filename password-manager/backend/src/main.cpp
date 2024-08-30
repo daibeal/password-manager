@@ -1,46 +1,7 @@
 #include <iostream>
 #include <string>
-#include "db_manager.h"
-#include "encryption.h"
+#include "common.h"
 
-// Function to add a password
-bool addPassword(DBManager& dbManager, const std::string& site, const std::string& username, const std::string& password) {
-    std::string encryptedPassword = Encryption::encrypt(password);
-    return dbManager.insertPassword(site, username, encryptedPassword);
-}
-
-// Function to retrieve a password
-std::string getPassword(DBManager& dbManager, const std::string& site, const std::string& username) {
-    auto passwords = dbManager.getPasswords();
-    for (const auto& [storedSite, storedUsername, encryptedPassword] : passwords) {
-        if (storedSite == site && storedUsername == username) {
-            return Encryption::decrypt(encryptedPassword);
-        }
-    }
-    throw std::runtime_error("Password not found");
-}
-
-// Function to update a password
-bool updatePassword(DBManager& dbManager, const std::string& site, const std::string& username, const std::string& newPassword) {
-    std::string encryptedNewPassword = Encryption::encrypt(newPassword);
-    return dbManager.updatePassword(site, username, encryptedNewPassword);
-}
-
-// Function to delete a password
-bool deletePassword(DBManager& dbManager, const std::string& site, const std::string& username) {
-    return dbManager.deletePassword(site, username);
-}
-
-// Function to list all passwords
-void listPasswords(DBManager& dbManager) {
-    auto passwords = dbManager.getPasswords();
-    for (const auto& [site, username, encryptedPassword] : passwords) {
-        std::string decryptedPassword = Encryption::decrypt(encryptedPassword);
-        std::cout << "Site: " << site << ", Username: " << username << ", Password: " << decryptedPassword << std::endl;
-    }
-}
-
-// Function to display the menu
 void displayMenu() {
     std::cout << "\nPassword Manager Menu:\n";
     std::cout << "1. Add Password\n";
@@ -53,19 +14,14 @@ void displayMenu() {
 }
 
 int main() {
-    std::cout << "Password Manager Backend" << std::endl;
-
-    // Initialize DBManager
-    DBManager dbManager("passwords.db");
-
-    // Create the passwords table if it doesn't exist
-    if (!dbManager.createTable()) {
+    if (!initializeDB()) {
         std::cerr << "Failed to create table." << std::endl;
         return 1;
     }
 
     int choice;
     std::string site, username, password, newPassword;
+    std::string response;  // Moved declaration outside the switch statement
 
     while (true) {
         displayMenu();
@@ -79,7 +35,7 @@ int main() {
                 std::cin >> username;
                 std::cout << "Enter password: ";
                 std::cin >> password;
-                if (addPassword(dbManager, site, username, password)) {
+                if (addPassword(site, username, password)) {
                     std::cout << "Password added successfully.\n";
                 } else {
                     std::cerr << "Failed to add password.\n";
@@ -92,7 +48,7 @@ int main() {
                 std::cout << "Enter username: ";
                 std::cin >> username;
                 try {
-                    std::string retrievedPassword = getPassword(dbManager, site, username);
+                    std::string retrievedPassword = getPassword(site, username);
                     std::cout << "Retrieved Password: " << retrievedPassword << std::endl;
                 } catch (const std::exception& e) {
                     std::cerr << e.what() << std::endl;
@@ -106,7 +62,7 @@ int main() {
                 std::cin >> username;
                 std::cout << "Enter new password: ";
                 std::cin >> newPassword;
-                if (updatePassword(dbManager, site, username, newPassword)) {
+                if (updatePassword(site, username, newPassword)) {
                     std::cout << "Password updated successfully.\n";
                 } else {
                     std::cerr << "Failed to update password.\n";
@@ -118,7 +74,7 @@ int main() {
                 std::cin >> site;
                 std::cout << "Enter username: ";
                 std::cin >> username;
-                if (deletePassword(dbManager, site, username)) {
+                if (deletePassword(site, username)) {
                     std::cout << "Password deleted successfully.\n";
                 } else {
                     std::cerr << "Failed to delete password.\n";
@@ -126,7 +82,9 @@ int main() {
                 break;
 
             case 5:
-                listPasswords(dbManager);
+                response.clear();  // Clear the response string before using it
+                listPasswords(response);
+                std::cout << response;
                 break;
 
             case 6:
